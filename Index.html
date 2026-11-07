@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOM GAMING WORLD</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080d1c;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:30px 15px;background:linear-gradient(120deg,#5515cc,#087ee8)}
+header h1{font-size:35px;margin:5px}
+header p{font-size:16px}
+nav{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;padding:15px;background:#111a30}
+nav a{color:white;text-decoration:none;font-weight:bold}
+main{max-width:1100px;margin:auto;padding:20px}
+input{width:100%;padding:15px;border-radius:12px;border:0;font-size:16px;margin:10px 0 20px}
+h2{color:#65aaff}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:15px}
+.game{background:#172440;border:1px solid #31466b;border-radius:15px;padding:18px 10px;text-align:center}
+.game .emoji{font-size:38px}
+.game h3{margin:10px 0}
+.game a{display:inline-block;background:#247bfa;color:white;text-decoration:none;padding:9px 15px;border-radius:8px}
+.game a:hover{background:#7545ed}
+footer{text-align:center;padding:25px;color:#aab6cc}
+</style>
+</head>
+<body>
+<header>
+<h1>🎮 DOM GAMING WORLD</h1>
+<p>YOUR WORLD. YOUR GAMES. YOUR FUN!</p>
+</header>
+<nav>
+<a href="#all">All Games</a>
+<a href="#cars">Cars</a>
+<a href="#sports">Sports</a>
+<a href="#adventure">Adventure</a>
+</nav>
+<main>
+<input id="search" placeholder="🔎 Search for a game..." oninput="filterGames()">
+
+<h2 id="all">🔥 ALL GAMES</h2>
+<div class="games" id="games"></div>
+</main>
+<footer>© 2026 DOM GAMING WORLD | Play. Explore. Have Fun!</footer>
+
+<script>
+const games = [
+["Roblox","🎮","https://www.roblox.com/"],
+["Minecraft","⛏️","https://www.minecraft.net/"],
+["Crazy Games","🤪","https://www.crazygames.com/"],
+["Slope","🏂","https://www.google.com/search?q=Slope+game"],
+["Retro Bowl","🏈","https://www.retrobowl.com/"],
+["Basketball Stars","🏀","https://www.crazygames.com/t/basketball"],
+["Soccer Skills","⚽","https://www.crazygames.com/t/soccer"],
+["Drift Hunters","🏎️","https://www.drifthunters.com/"],
+["Moto X3M","🏍️","https://www.crazygames.com/t/motorbike"],
+["8 Ball Pool","🎱","https://www.crazygames.com/t/billiards"],
+["Subway Surfers","🚇","https://poki.com/en/g/subway-surfers"],
+["Temple Run","🏃","https://poki.com/"],
+["Football Games","🏈","https://www.crazygames.com/t/football"],
+["Car Racing","🚗","https://www.crazygames.com/t/racing"],
+["Parkour","🤸","https://www.crazygames.com/t/parkour"],
+["Chess","♟️","https://www.chess.com/"],
+["Tetris","🧩","https://tetris.com/play-tetris"],
+["Pac-Man","👾","https://www.google.com/search?q=play+pacman"],
+["2048","🔢","https://play2048.co/"],
+["Among Us","🚀","https://www.innersloth.com/games/among-us/"],
+["Agar.io","🔵","https://agar.io/"],
+["Slither.io","🐍","https://slither.io/"],
+["Geometry Dash","🔺","https://www.robtopgames.com/"],
+["Hill Climb Racing","🚙","https://poki.com/"],
+["Fireboy and Watergirl","🔥","https://www.coolmathgames.com/"],
+["Stickman Games","🕺","https://www.crazygames.com/t/stickman"],
+["Cooking Games","🍕","https://www.crazygames.com/t/cooking"],
+["Fishing Games","🎣","https://www.crazygames.com/t/fishing"],
+["Hockey Games","🏒","https://www.crazygames.com/t/hockey"],
+["Bowling","🎳","https://www.crazygames.com/t/bowling"],
+["Golf Games","⛳","https://www.crazygames.com/t/golf"],
+["Baseball","⚾","https://www.crazygames.com/t/baseball"],
+["Tennis","🎾","https://www.crazygames.com/t/tennis"],
+["Snowboarding","🏂","https://www.crazygames.com/t/snowboarding"],
+["Truck Driving","🚚","https://www.crazygames.com/t/truck"],
+["Motorcycle Racing","🏍️","https://www.crazygames.com/t/motorbike"],
+["Airplane Games","✈️","https://www.crazygames.com/"],
+["Puzzle Games","🧩","https://www.crazygames.com/t/puzzle"],
+["Strategy Games","🧠","https://www.crazygames.com/t/strategy"],
+["Adventure Games","🗺️","https://www.crazygames.com/t/adventure"],
+["Horror Games","👻","https://www.crazygames.com/t/horror"],
+["Platform Games","🕹️","https://www.crazygames.com/t/platform"],
+["Shooting Games","🎯","https://www.crazygames.com/t/shooting"],
+["Multiplayer Games","👥","https://www.crazygames.com/"],
+["Arcade Games","🕹️","https://www.crazygames.com/"],
+["Card Games","🃏","https://www.crazygames.com/t/card"],
+["Animal Games","🐯","https://www.crazygames.com/t/animal"],
+["Space Games","🚀","https://www.crazygames.com/t/space"],
+["Ninja Games","🥷","https://www.crazygames.com/t/ninja"],
+["City Driving","🚕","https://www.crazygames.com/t/driving"],
+["Soccer","⚽","https://www.crazygames.com/t/soccer"]
+];
+
+function displayGames(list){
+document.getElementById("games").innerHTML=list.map(g=>
+`<div class="game"><div class="emoji">${g[1]}</div><h3>${g[0]}</h3><a href="${g[2]}" target="_blank" rel="noopener">PLAY NOW</a></div>`
+).join("");
+}
+function filterGames(){
+let q=document.getElementById("search").value.toLowerCase();
+displayGames(games.filter(g=>g[0].toLowerCase().includes(q)));
+}
+displayGames(games);
+</script>
+</body>
+</html>
